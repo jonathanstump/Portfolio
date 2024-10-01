@@ -20,7 +20,7 @@
     border-radius: 10px;
 }
 
-.calclator form input{
+.calculator form input{
     border: 0;
     outline: 0;
     width: 60px;
@@ -32,4 +32,25 @@
     color: white;
     cursor: pointer;
     margin: 10px;
+}
+
+form .display{
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px 0;
+}
+
+form .display input{
+    text-align: right;
+    flex: 1;
+    font-size: 45px;
+    box-shadow: none;
+}
+
+form input.equal{
+    width: 145px;
+}
+
+form input.operator{
+    color: #33ffd8
 }

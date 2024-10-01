@@ -10,42 +10,69 @@
 <div class="container">
     <div class="calculator">
         <form>
-            <div>
+            <div class="display">
                 <input type="text" name="display">
             </div>
             <div>
-                <input type="button" value="AC">
-                <input type="button" value="DE">
-                <input type="button" value=".">
-                <input type="button" value="/">
+                <input type="button" value="AC" onclick="display.value = '' " class="operator">
+                <input type="button" value="DE" onclick="display.value = display.value.toString().slice(0, -1)" class="operator">
+                <input type="button" value="." onclick="appendToDisplay('.')" class="operator">
+                <input type="button" value="/" onclick="appendToDisplay('/')" class="operator">
             </div>
             <div>
-                <input type="button" value="7">
-                <input type="button" value="8">
-                <input type="button" value="9">
-                <input type="button" value="*">
+                <input type="button" value="7" onclick="appendToDisplay('7')">
+                <input type="button" value="8" onclick="appendToDisplay('8')">
+                <input type="button" value="9" onclick="appendToDisplay('9')">
+                <input type="button" value="*" onclick="appendToDisplay('*')" class="operator">
             </div>
             <div>
-                <input type="button" value="4">
-                <input type="button" value="5">
-                <input type="button" value="6">
-                <input type="button" value="-">
+                <input type="button" value="4" onclick="appendToDisplay('4')">
+                <input type="button" value="5" onclick="appendToDisplay('5')">
+                <input type="button" value="6" onclick="appendToDisplay('6')">
+                <input type="button" value="-" onclick="appendToDisplay('-')" class="operator">
             </div>
             <div>
-                <input type="button" value="1">
-                <input type="button" value="2">
-                <input type="button" value="3">
-                <input type="button" value="+">
+                <input type="button" value="1" onclick="appendToDisplay('1')">
+                <input type="button" value="2" onclick="appendToDisplay('2')">
+                <input type="button" value="3" onclick="appendToDisplay('3')">
+                <input type="button" value="+" onclick="appendToDisplay('+')" class="operator">
             </div>
             <div>
-                <input type="button" value="00">
-                <input type="button" value="0">
-                <input type="button" value="=">
+                <input type="button" value="00" onclick="appendToDisplay('00')">
+                <input type="button" value="0" onclick="appendToDisplay('0')">
+                <input type="button" value="=" onclick="calculateResult()" class="equal operator">
             </div>
         </form>
     </div>
 </div>
 
+<script>
+    const maxLength = 12; 
+
+    // write to screen, ensure max length
+    function appendToDisplay(value) {
+        const display = document.querySelector('input[name="display"]');
+        if (display.value.length < maxLength) {
+            display.value += value;
+        }
+    }
+
+    // Function to evaluate the result and format it
+    function calculateResult() {
+        const display = document.querySelector('input[name="display"]');
+        try {
+            let result = eval(display.value);
+
+            // If result exceeds display width, convert to scientific notation
+            if (result.toString().length > maxLength) {
+                result = result.toExponential(5); 
+            }
+            display.value = result;
+        } catch (error) {
+            display.value = "Error"; 
+        }
+    }
+</script>
 
 
 
