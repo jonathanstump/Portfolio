@@ -27,6 +27,8 @@ Marking Element as Complete: <br/>
     <img src="https://imgur.com/GvDqTSg.png" height="80%" width="80%" alt="Marked as Complete"/>
 </p>
 
+[Educational Resource Used](https://www.youtube.com/watch?v=G0jO8kUrg-I&t=1s)
+
 <!--
  ```diff
 - text in red
