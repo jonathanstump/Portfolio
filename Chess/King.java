@@ -11,13 +11,13 @@ public class King extends Piece {
 			}
 		}
 		
-		public boolean getFM() {
-	        return firstMove; // Getter for firstMove
-	    }
+	    	public boolean getFM() {
+	        	return firstMove; // Getter for firstMove
+	    	}	
 
-	    public void setFM(boolean hasMoved) {
-	        this.firstMove = hasMoved; // Setter for firstMove
-	    }
+	    	public void setFM(boolean hasMoved) {
+	        	this.firstMove = hasMoved; // Setter for firstMove
+	    	}
 		
 		public boolean canMove(Board b, Position start, Position end) {
 			if( end.getPiece() != null) {
