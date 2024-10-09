@@ -2,6 +2,7 @@ package ChessPackage;
 
 public class King extends Piece {
 	//public boolean checkMate = false;
+	private boolean firstMove = true;
 		public King(boolean iW) {
 			super(iW);
 			
@@ -9,6 +10,14 @@ public class King extends Piece {
 				this.setWhite(false);
 			}
 		}
+		
+		public boolean getFM() {
+	        return firstMove; // Getter for firstMove
+	    }
+
+	    public void setFM(boolean hasMoved) {
+	        this.firstMove = hasMoved; // Setter for firstMove
+	    }
 		
 		public boolean canMove(Board b, Position start, Position end) {
 			if( end.getPiece() != null) {
