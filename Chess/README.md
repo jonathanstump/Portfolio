@@ -27,7 +27,10 @@ to move into check.
 <p align="center">
 Creating the board: <br/>
 <p align="left">
-&nbsp;&nbsp;&nbsp;&nbsp;Each
+&nbsp;&nbsp;&nbsp;&nbsp; The actual graphics of the board were created under the strict limitations of using only Java. A 2D array of JButtons is used, with images
+placed over them for the pieces. The choice of buttons was used to make selecting a piece easier, as we can use an actionEventListener to check for clicks. Under
+the hood, a 2D array of Positions mirroring the board is used to track where the pieces are relative to the individual buttons. The position class deals with
+an individual position on the board, denoted by rank and file variables. A position can check which piece -- if any -- is on that rank and file. 
 </p>
 <br/>
 </p>
