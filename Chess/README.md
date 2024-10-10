@@ -16,10 +16,20 @@ The prompt of this Hackathon challenge was to create a collaborative project usi
 <p align="center">
 The Pieces: <br/>
 <p align="left">
-Each piece inherits from a 'Piece.java' abstract class, which outlines common features and methods that will need to be tracked
-  for each piece, such as color, name, if piece is captured, if piece can move to a particular square, and if piece is the same color as another piece.
+&nbsp;&nbsp;&nbsp;&nbsp;Each piece inherits from a 'Piece.java' abstract class, which outlines common features and methods that will need to be tracked
+for each piece, such as color, name, if piece is captured, if piece can move to a particular square, and if piece is the same color as another piece. Then, 
+each piece has its own class that extends the abstract class and overrides the canMove method according to the logic of each piece. Some pieces also have 
+additional methods to keep track of their unique properties, such as the pawn being able to move two spaces on its first move and the king not being able
+to move into check.
 </p>
-
+<br/>
+</p>
+<p align="center">
+Creating the board: <br/>
+<p align="left">
+&nbsp;&nbsp;&nbsp;&nbsp;Each
+</p>
+<br/>
 </p>
 
 <!--
