@@ -1,7 +1,7 @@
 <h1>Chess -- in Java (Hackathon 2022)</h1>
 
 <h2>Description</h2>
-The prompt of this Hackathon challenge was to create a collaborative project using ONLY Java in three days.
+The prompt of this Hackathon challenge was to create a collaborative project using ONLY Java in three days. I worked with a team including myself and two others.
 <br />
 
 
@@ -30,7 +30,21 @@ Creating the board: <br/>
 &nbsp;&nbsp;&nbsp;&nbsp; The actual graphics of the board were created under the strict limitations of using only Java. A 2D array of JButtons is used, with images
 placed over them for the pieces. The choice of buttons was used to make selecting a piece easier, as we can use an actionEventListener to check for clicks. Under
 the hood, a 2D array of Positions mirroring the board is used to track where the pieces are relative to the individual buttons. The position class deals with
-an individual position on the board, denoted by rank and file variables. A position can check which piece -- if any -- is on that rank and file. 
+an individual position on the board, denoted by rank and file variables. A position can check which piece -- if any -- is on that rank and file. At the start of each game, each image is placed on its starting JButton, and the virtual version of the piece is placed on its appropriate position.
+</p>
+<br/>
+</p>
+<p align="center">
+Moving the pieces: <br/>
+<p align="left">
+&nbsp;&nbsp;&nbsp;&nbsp; Moving the pieces on the board was definitely a challenge. First, we had to keep track of clicks on the screen. The JButtons were particularly useful for this, as we could use an actionEventListener. What was tricky was that we needed to keep track of a second click on the board for where the piece was going to be moving. To keep track of this, we used an sPress (second press) boolean variable, and stored the virtual position of the source and destination of the clicks (checking to see if there was a piece to move from the square of the first click) in fPos and tPos variables (from Position and to Position). From here we can start moving the piece, with a few special cases to cover -- such as the king attempting to castle or moving into check. Luckily, the logic for the majority of cases was pretty simple: check the piece being moved's canMove method and if true update the image of the piece to the button at tPos. Last, we have to update the state of the game after the move is complete. This means checking for checkmate, calling the toString() method to display the chess notation of the move on the screen, and updating the first move variable if the piece was a king, rook, or pawn. We also included the option to flip the board on the screen for co-op gaming, but commented it out for the time being.
+</p>
+<br/>
+</p>
+<p align="center">
+ <br/>
+<p align="left">
+&nbsp;&nbsp;&nbsp;&nbsp; 
 </p>
 <br/>
 </p>
