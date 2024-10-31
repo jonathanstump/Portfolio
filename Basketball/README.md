@@ -4,6 +4,10 @@
 
 This remake reimagines the 1979 Atari Basketball game using TIC-80, a fantasy emulator with self-imposed technical limitations to mimic retro style 8-bit games of the 1980s. Before programming, we focused on the setup of the game, customizing the sprites and map in the TIC-80 editor. We modeled our sprites – the characters of the game – after stop animation. For example, the dribble animation is created by alternating the sprite id drawn on the screen between the ball in the hand of the player and the ball on the ground. Our sprites were much more detailed than the original, making the ball round, the baskets realistic, and the players look like actual people. We also felt that the map in the original game was a bit boring, so we used the tile editor to create a much more colorful court, adding fans in the background, and the score being displayed on a jumbotron. 
 
+![The Court at the beginning of the game](https://imgur.com/gIZMGWS.png)
+
+> (Above): The map and sprites as the look at the beginning of the game.
+
 ## Essence of the Original
 
 ### Shooting and Perspective
