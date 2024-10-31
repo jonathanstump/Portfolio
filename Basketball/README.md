@@ -1,4 +1,4 @@
-# Remaking Atari Basketball (1978) in TIC-80 with Lua -- Made with Classmate Devin Burger
+# Remaking Atari Basketball (1978) in TIC-80 with Lua -- Made with Fellow Swarthmore Student Devin Burger
 
 Play our remake [here](https://github.swarthmore.edu/pages/CS91S-F24/remake-dburger1-jstump2/game/).
 
