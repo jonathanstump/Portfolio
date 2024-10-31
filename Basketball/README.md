@@ -1,4 +1,15 @@
-# Remaking Atari Basketball (1978) in TIC-80
+# Remaking Atari Basketball (1978) in TIC-80 -- Made with Classmate Devin Burger
+
+Play our remake [here](https://github.swarthmore.edu/pages/CS91S-F24/remake-dburger1-jstump2/game/).
+
+Keyboard controlls Player1:
+  ```
+  Arrow Keys: Movement
+  Z: Jump
+  Hold A: Shoot
+ ```
+
+To use Player 2, must have 2 TIC-80 supported controllers
 
 ## The Early Process
 
@@ -13,6 +24,15 @@ This remake reimagines the 1979 Atari Basketball game using TIC-80, a fantasy em
 ### Shooting and Perspective
 
 Besides our obvious sprite deviations, we decided on a few changes we wanted to implement in our remake, and also a few aspects of the original that were an absolute necessity to keep in order to capture the essence of the game. First, we knew that the fan’s eye perspective – a 2D court captured from above but at angle rather than at the 12 o’clock bird’s eye view – was critical in not just gameplay but also how a player would perceive the pseudo-3D mechanics like shooting and jumping. In addition, making the shooting feel smooth and rewarding was the biggest singular focus of our remake. We wanted to maintain shot timing, where the longer the shot button is pressed, the farther the shot goes. To do this, we implemented a shot meter: a sprite next to the player that charges up the longer the shoot button is pressed. If the player shoots the ball with the correct timing, the meter will turn green and sparkly, signifying that the shot will eventually go in. We implemented this using a counter variable ‘t’ in the TIC() function – which is called 60 times per second – to track each iteration that the shoot button was held. In the background, we calculated the necessary ‘t’ value that should be pressed in order to score. During the press of the shoot button, ‘t’ is compared to the ideal ‘t’ value and the meter is updated based on what percentage ‘t’ is of the ideal t. By using this to determine initial velocity, the player only controls one variable of the shot: power. We also played with the audio to add a satisfying noise when the ball goes through the basket. 
+
+![Player 1 dribbling before a shot](https://imgur.com/YaZn783.png)
+> (Above): Player 1 dribbiling before a shot
+
+![Player 1 part-way through shooting](https://imgur.com/QmL2GGB.png)
+> (Above): Player 1 halfway through shooting
+
+![Ball in the air after a shot](https://imgur.com/6HduOhP.png)
+> (Above): Player 1 after releasing the ball. The green meter indicates the ball with eventually go in.
 
 It’s important to pause here and note one unintended effect of the previously mentioned shot mechanics and the way player sprites are drawn: shooting from the direct corner of the court is impossible. In the original game, the player sprites aren’t very realistic to people, and the shot physics in the corner are different from other instances. If we implemented different physics in the corner into our game, it would look very strange because the detail of the player sprites firmly cements them in one direction. Even when a player moves along the y-axis, the sprite does not turn in any way. Therefore, our shot physics were visualized primarily as an x-axis action event. So when a player shoots from directly under the basket, the ball cannot get high enough to score before it moves past the basket in the x-direction. In the future, it would be interesting to explore changing the sprites to face the basket upon a corner shot and adding physics accordingly.
 
