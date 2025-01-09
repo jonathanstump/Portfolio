@@ -1139,7 +1139,7 @@ void main(void)
   
     setup_game();
 
-    // Infinite loop
+    // Infinite loop.
     while(1) {
         update_variables_every_loop();
         check_erase_wave();
