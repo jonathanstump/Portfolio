@@ -41,7 +41,7 @@ In the original attempt, there was no sprite animation besides the changing of s
 to every movement, and adding classic 8-bit sound to each one.
 
 ### Mechanics
-We upgraded many attack mechanics from the original attempt, in particular attacking. Instead of tongues, our fighting frogs now have swords, which can be thrown or stabbed. To dodge, the other player can have their sword at the same
+We upgraded many attack mechanics from the original attempt, in particular the way in which the characters damage each other. Instead of tongues, our fighting frogs now have swords, which can be thrown or stabbed. To dodge, the other player can have their sword at the same
 state, or can crouch or jump around it. Now when a player is hit, they do not lose a heart of health, but are either disarmed or take damage, a sword being more dangerous than a fist.
 
 In addition, we replaced the invincibility timer mechanic with a bounce back mechanic, where a player is launched backwards if they make contact with an enemy.
