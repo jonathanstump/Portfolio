@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='menubar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='search-results.css') }}">
+    <style>
+        .hidden{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <script id="replace_with_navbar" src="{{ url_for('static', filename='menu.js') }}"></script>
+
+    <div class="buttons">
+        <button id="movieButton" onclick="showMovieBar()">Search Movies</button>
+        <button id="playlistButton" onclick="showPlaylistBar()">Search Playlists</button>
+    </div>
+    
+    <div class="search-bar hidden" id="searchBar">
+        <input type="text" id="searchInput" placeholder="">
+    </div>
+
+    <div class="results" id="results-container"></div>
+
+    <div id="movie-data" class="modal">
+        <div class="modal-content">
+            <span onclick="removeMovieData()" class="close">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+
+        function removeMovieData() {
+            document.getElementById('movie-data').style.display = 'none';
+        }
+
+        function movieClick(movie) {
+            const searchData = movie.imdbID;
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var results = JSON.parse(this.responseText);
+                    displayMovieDetails(results);
+                }
+            };
+            xhttp.open("GET", "/movie/" + searchData, true);
+            xhttp.send();
+        }
+
+        function displayMovieDetails(movie) { 
+            const modalBody = document.getElementById('modal-body');
+            const key = movie.Title + movie.Year;
+            let stored = localStorage.getItem(`movie_${key}`);
+            let storedData = stored ? JSON.parse(stored) : null;
+            let likeCount = storedData?.likes || 0;
+            let isLiked = storedData ? storedData.liked === true : false;
+
+            if (!movie.Poster || movie.Poster === "N/A") {
+                movie.Poster = "https://placehold.co/150x225?text=No+Poster";
+            }
+
+            const likeClass = isLiked ? "like-button-liked" : "like-button";
+
+            modalBody.innerHTML = `
+                <h2>${movie.Title}</h2>
+                <h4>Released: ${movie.Released}</h4>
+                <h4>Genre: ${movie.Genre}</h4>
+                <h4>Language: ${movie.Language}</h4>
+                <h4>Directed by: ${movie.Director}</h4>
+                <h4>Writer: ${movie.Writer}</h4>
+                <h4>Actors: ${movie.Actors}</h4>
+                <h4>Metascore: ${movie.Metascore}</h4>
+                <h4>IMDB Rating: ${movie.imdbRating}</h4>
+                <p>${movie.Plot}</p>
+                <button id="like-btn" class="${likeClass}" onclick="toggleLike('${key}', '${movie.Title}', '${movie.Year}', '${movie.Poster}')">
+                    ${isLiked ? "❤️" : "🤍"} Like (${likeCount})
+                </button>
+            `;
+
+            fetchLikeData(key)
+            document.getElementById('movie-data').style.display = 'block';
+        }
+
+        function playlistSearch(){
+            var searchInputData = document.getElementById("searchInput").value;
+            if (searchInputData.length >= 3) {
+                sendDataPlaylist(searchInputData);
+            } else {
+                document.getElementById("results-container").innerHTML = "";
+            }
+        }
+
+        function currSearch() {
+            var searchInputData = document.getElementById("searchInput").value;
+            if (searchInputData.length >= 3) {
+                sendData(searchInputData);
+            } else {
+                document.getElementById("results-container").innerHTML = "";
+            }
+        }
+
+        function sendData(searchData) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var results = JSON.parse(this.responseText);
+                    if (results.Response !== "True") {
+                        document.getElementById("results-container").innerHTML = "<p>No results found.</p>";
+                    } else {
+                        var movies = results.Search;
+                        appendResults(movies);
+                    }
+                }
+            };
+            xhttp.open("GET", "search/" + searchData, true);
+            xhttp.send();
+        }
+
+        function sendDataPlaylist(searchData){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var results = JSON.parse(this.responseText);
+                    if (!results.success) {
+                        document.getElementById("results-container").innerHTML = "<p>No results found.</p>";
+                    } else {
+                        var playlists = results.playlists;
+                        appendResultsPlaylists(playlists);
+                    }
+                }
+            };
+            xhttp.open("GET", "searchPlaylists/" + searchData, true);
+            xhttp.send();
+        }
+
+        function appendResultsPlaylists(results) {
+            const container = document.getElementById("results-container");
+            container.innerHTML = "";
+            container.classList.add("playlist-container");
+
+            results.forEach(function(playlist) {
+                const playlistElement = document.createElement("div");
+                playlistElement.className = "playlist-item";
+
+                let movies = [];
+                try {
+                    const playlistData = JSON.parse(playlist.playlist_data);
+                    movies = playlistData.movies || [];
+                } catch (e) {
+                    console.error("Error:", e);
+                    movies = [];
+                }
+
+                const moviesToShow = movies.slice(0, 4);
+
+                let movieImagesHTML = "";
+                moviesToShow.forEach(function(movie) {
+                    movieImagesHTML += `
+                        <img src="${movie.Poster || 'https://placehold.co/150x225?text=No+Poster'}" 
+                            alt="${movie.Title}" 
+                            class="playlist-movie-poster"
+                            title="${movie.Title}${movie.Year}">`;
+                });
+
+                const likeSpanId = `like-count-playlist-${playlist.playlist_id}`;
+                const likeButtonId = `like-button-playlist-${playlist.playlist_id}`;
+
+                playlistElement.innerHTML = `
+                    <div class="playlist-header">
+                        <h3>${playlist.playlist_name}</h3>
+                        <p>Created by: ${playlist.created_by}</p>
+                        <span class="like-display" id="${likeSpanId}">Loading...</span>
+                        <button class="like-button" id="${likeButtonId}" 
+                            onclick="togglePlaylistLike(${playlist.playlist_id}, '${playlist.playlist_name}', '${playlist.created_by}')">
+                            🤍 Like
+                        </button>
+                        <a href="/playlist/${playlist.playlist_id}" class="p_link">See All</a>
+                    </div>
+                    <div class="playlist-movies">
+                        ${movieImagesHTML}
+                    </div>
+                `;
+
+                container.appendChild(playlistElement);
+                fetchPlaylistLikeData(playlist.playlist_id);
+            });
+        }
+        function appendResults(results) {
+            const container = document.getElementById("results-container");
+            container.innerHTML = "";
+            results.forEach(movie => {
+                const key = movie.Title + movie.Year;
+
+                const item = document.createElement("div");
+                item.className = "result-item";
+
+                item.innerHTML = `
+                    <img src="${movie.Poster || 'https://placehold.co/150x225?text=No+Poster'}" alt="${movie.Title}">
+                    <div class="movie-title">
+                        <h3>${movie.Title} (${movie.Year})</h3>
+                        <span class="like-display" id="like-count-${key}">Loading...</span>
+                    </div>
+                `;
+
+                item.querySelector('img').addEventListener('click', () => movieClick(movie));
+                container.appendChild(item);
+
+                fetchLikeData(key);
+            });
+        }
+
+        function toggleLike(key, title, year, poster) {
+            fetch('/like_movie', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ key, title, year, poster })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    fetchLikeData(key); 
+                } else {
+                    alert(data.message);
+                }
+            });
+        }
+
+        function togglePlaylistLike(playlistId, playlistName, createdBy) {
+            fetch('/like_playlist', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ playlist_id: playlistId, playlist_name: playlistName, created_by: createdBy })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    fetchPlaylistLikeData(playlistId);
+                } else {
+                    alert(data.message);
+                }
+            });
+        }
+
+        function fetchPlaylistLikeData(playlistId) {
+            fetch(`/playlist_likes/${playlistId}`)
+                .then(res => res.json())
+                .then(data => {
+                    const heart = data.liked ? "❤️" : "🤍";
+                    const countSpan = document.getElementById(`like-count-playlist-${playlistId}`);
+                    const btn = document.getElementById(`like-button-playlist-${playlistId}`);
+
+                    if (countSpan) {
+                        countSpan.innerText = `${heart} ${data.likes}`;
+                    }
+
+                    if (btn) {
+                        btn.innerText = `${heart} Like`;
+                        btn.classList.toggle("like-button-liked", data.liked);
+                    }
+                });
+        }
+        
+        function fetchLikeData(key) {
+            fetch(`/movie_likes/${key}`)
+            .then(res => res.json())
+            .then(data => {
+                const btn = document.getElementById("like-btn");
+                const countSpan = document.getElementById(`like-count-${key}`);
+
+                const heart = data.liked ? "❤️" : "🤍";
+                if (btn) {
+                    btn.classList.toggle("like-button-liked", data.liked);
+                    btn.innerText = `${heart} Like (${data.likes})`;
+                }
+                if (countSpan) {
+                    countSpan.innerText = `${heart} ${data.likes}`;
+                }
+            });
+        }
+        function showMovieBar(){
+            document.getElementById("results-container").innerHTML = "";
+            document.getElementById("searchBar").classList.remove('hidden');
+            document.getElementById("searchInput").placeholder = "Search for a movie...";
+            document.getElementById("searchInput").value = "";
+            document.getElementById("searchInput").removeEventListener("input", playlistSearch);
+            document.getElementById("searchInput").removeEventListener("input", currSearch);
+            document.getElementById("searchInput").addEventListener("input", currSearch);
+        }
+        function showPlaylistBar(){
+            document.getElementById("results-container").innerHTML = "";
+            document.getElementById("searchBar").classList.remove('hidden');
+            document.getElementById("searchInput").placeholder = "Search for a playlist...";
+            document.getElementById("searchInput").value = "";
+            document.getElementById("searchInput").removeEventListener("input", playlistSearch);
+            document.getElementById("searchInput").removeEventListener("input", currSearch);
+            document.getElementById("searchInput").addEventListener("input", playlistSearch);
+        }
+    </script>
+</body>
+</html>
