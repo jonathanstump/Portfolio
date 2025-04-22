@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ playlist_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='menubar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='search-results.css') }}">
+</head>
+<body>
+    <script id="replace_with_navbar" src="{{ url_for('static', filename='menu.js') }}"></script>
+    <h1>{{ playlist_name }}</h1>
+    <p>Created by: {{ user }}</p>
+    
+    <div class="results">
+        {% for movie in movie_data.movies %}
+        <div class="result-item">
+            <img src="{{ movie.Poster }}" alt="{{ movie.Title }}" onclick="movieClick('{{ movie.imdbID }}')">
+            <h3>{{ movie.Title }} ({{ movie.Year }})</h3>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div id="movie-data" class="modal">
+        <div class="modal-content">
+            <span onclick="removeMovieData()" class="close">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+    <script>
+        function removeMovieData() {
+            document.getElementById('movie-data').style.display = 'none';
+        }
+        function movieClick(imdbID) {
+            const searchData = imdbID;
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var results = JSON.parse(this.responseText);
+                    displayMovieDetails(results);
+                }
+            };
+            xhttp.open("GET", window.location.origin + "/movie/" + searchData, true);
+            xhttp.send();
+        }
+        function displayMovieDetails(movie) { 
+            const modalBody = document.getElementById('modal-body');
+            const key = movie.Title + movie.Year;
+            let stored = localStorage.getItem(`movie_${key}`);
+            let storedData = stored ? JSON.parse(stored) : null;
+            let likeCount = storedData?.likes || 0;
+            let isLiked = storedData ? storedData.liked === true : false;
+
+            if (!movie.Poster || movie.Poster === "N/A") {
+                movie.Poster = "https://placehold.co/150x225?text=No+Poster";
+            }
+
+            const likeClass = isLiked ? "like-button-liked" : "like-button";
+
+            modalBody.innerHTML = `
+                <h2>${movie.Title}</h2>
+                <h4>Released: ${movie.Released}</h4>
+                <h4>Genre: ${movie.Genre}</h4>
+                <h4>Language: ${movie.Language}</h4>
+                <h4>Directed by: ${movie.Director}</h4>
+                <h4>Writer: ${movie.Writer}</h4>
+                <h4>Actors: ${movie.Actors}</h4>
+                <h4>Metascore: ${movie.Metascore}</h4>
+                <h4>IMDB Rating: ${movie.imdbRating}</h4>
+                <p>${movie.Plot}</p>
+                <button id="like-btn" class="${likeClass}" onclick="toggleLike('${key}', '${movie.Title}', '${movie.Year}', '${movie.Poster}')">
+                    ${isLiked ? "❤️" : "🤍"} Like (${likeCount})
+                </button>
+            `;
+
+            fetchLikeData(key)
+            document.getElementById('movie-data').style.display = 'block';
+        }
+        function fetchLikeData(key) {
+            fetch(`/movie_likes/${key}`)
+            .then(res => res.json())
+            .then(data => {
+                const btn = document.getElementById("like-btn");
+                const countSpan = document.getElementById(`like-count-${key}`);
+
+                const heart = data.liked ? "❤️" : "🤍";
+                if (btn) {
+                    btn.classList.toggle("like-button-liked", data.liked);
+                    btn.innerText = `${heart} Like (${data.likes})`;
+                }
+                if (countSpan) {
+                    countSpan.innerText = `${heart} ${data.likes}`;
+                }
+            });
+        }
+        function toggleLike(key, title, year, poster) {
+            fetch('/like_movie', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ key, title, year, poster })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    fetchLikeData(key); 
+                } else {
+                    alert(data.message);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
