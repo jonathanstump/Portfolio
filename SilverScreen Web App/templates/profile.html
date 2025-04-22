@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='menubar.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='profile.css') }}">
+</head>
+<body>
+    <script id="replace_with_navbar" src="{{ url_for('static', filename='menu.js') }}"></script>
+    <div class="profile-info">
+        <h2 id="username"></h2>
+    </div>
+
+    <div class="strip-items">
+        <div class="icon-container" onClick="loadLikedMovies()">
+            <span>Liked Movies</span>
+            <i class="fas fa-heart"></i>
+        </div>
+        <div class="icon-container" onClick="loadLikedPlaylists()">
+            <span>Liked Playlists</span>
+            <i class="fa fa-star"></i>
+        </div>
+        <div class="icon-container" onClick="loadMyPlaylists()">
+            <span>My Playlists</span>
+            <i class="fa fa-film"></i>
+        </div>
+        <div>
+            <a href="/logout" id="signout">Sign Out</a>
+        </div>
+    </div>
+    <script>
+        function getUsername(){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var results = this.responseText;
+                    document.getElementById("username").innerHTML = results;
+                };
+            }
+            xhttp.open("GET", "/getUsername", true);
+            xhttp.send();
+        }
+        getUsername();
+        function loadLikedMovies(){
+            fetch('/user_liked_movies')
+                .then(res => res.json())
+                .then(data => {
+                    const container = document.getElementById('likedMoviesGrid');
+                    container.innerHTML = '';
+                    if (data.length == 0){
+                        container.innerHTML = '<p>No Liked Movies Yet!</p>';
+                    } else {
+                        data.forEach(movie => {
+                            const card = document.createElement('div');
+                            card.style.width = '200px';
+                            card.style.borderRadius = '10px';
+                            card.style.padding = '10px';
+                            card.style.textAlign = 'center';
+                            card.innerHTML = `
+                                <img src="${movie.poster}" alt="${movie.title}" style="width:100%; border-radius: 10px 10px 0 0;">
+                                <h3>${movie.title} (${movie.year})</h3>
+                            `;
+
+                            container.appendChild(card);
+                        });   
+                        
+                    }
+                    document.getElementById('likedMoviesContainer').style.display = 'block';
+                    window.scrollTo({
+                        top: document.getElementById('likedMoviesContainer').offsetTop,
+                        behavior: 'smooth'
+                    });
+                })
+                .catch(err => {
+                    console.error('Error loading liked movies:', err);
+                });
+        }
+        function closeLikedMovies(){
+            document.getElementById('likedMoviesContainer').style.display = 'none';
+        }
+        function loadLikedPlaylists() {
+            fetch('/user_liked_playlists')
+                .then(res => res.json())
+                .then(data => {
+                    const container = document.getElementById('likedPlaylistsGrid');
+                    container.innerHTML = '';
+
+                    if (data.length === 0) {
+                        container.innerHTML = '<p>No Liked Playlists Yet!</p>';
+                    } else {
+                        data.forEach(function (playlist) {
+                            const playlistElement = document.createElement('div');
+                            playlistElement.className = 'playlist-item';
+
+                            let movies = [];
+                            try {
+                                const playlistData = JSON.parse(playlist.playlist_data);
+                                movies = playlistData.movies || [];
+                            } catch (e) {
+                                console.error("Error parsing playlist data:", e);
+                                movies = [];
+                            }
+
+                            const moviesToShow = movies.slice(0, 4);
+
+                            let movieImagesHTML = "";
+                            moviesToShow.forEach(function (movie) {
+                                movieImagesHTML += `
+                                    <img src="${movie.Poster || 'https://placehold.co/150x225?text=No+Poster'}" 
+                                        alt="${movie.Title || 'Movie'}" 
+                                        class="playlist-movie-poster"
+                                        title="${movie.Title || ''}${movie.Year ? ` (${movie.Year})` : ''}">`;
+                            });
+
+                            if (movies.length > 4) {
+                                movieImagesHTML += `
+                                    <div class="more-movies">
+                                        +${movies.length - 4} more
+                                    </div>`;
+                            }
+
+                            playlistElement.innerHTML = `
+                                <div class="playlist-header">
+                                    <h3>${playlist.playlist_name}</h3>
+                                    <p>Created by: ${playlist.created_by}</p>
+                                    <a href="/playlist/${playlist.playlist_id}" class="p_link">See All</a>
+                                </div>
+                                <div class="playlist-movies">
+                                    ${movieImagesHTML}
+                                </div>
+                            `;
+
+                            container.appendChild(playlistElement);
+
+                        });
+                    }
+
+                    document.getElementById('likedPlaylistsContainer').style.display = 'block';
+                    window.scrollTo({
+                        top: document.getElementById('likedPlaylistsContainer').offsetTop,
+                        behavior: 'smooth'
+                    });
+                })
+                .catch(err => {
+                    console.error('Error loading liked playlists:', err);
+                });
+        }
+        function closeLikedPlaylists() {
+            document.getElementById('likedPlaylistsContainer').style.display = 'none';
+        }
+        function loadMyPlaylists() {
+            fetch('/user_created_playlists')
+                .then(res => res.json())
+                .then(data => {
+                    const container = document.getElementById('myPlaylistsGrid');
+                    container.innerHTML = '';
+
+                    if (data.length === 0) {
+                        container.innerHTML = '<p>No Playlists Created Yet!</p>';
+                    } else {
+                        data.forEach(function (playlist) {
+                            const playlistElement = document.createElement('div');
+                            playlistElement.className = 'playlist-item';
+
+                            let movies = [];
+                            try {
+                                const playlistData = JSON.parse(playlist.playlist_data);
+                                movies = playlistData.movies || [];
+                            } catch (e) {
+                                console.error("Error parsing playlist data:", e);
+                                movies = [];
+                            }
+
+                            const moviesToShow = movies.slice(0, 4);
+
+                            let movieImagesHTML = "";
+                            moviesToShow.forEach(function (movie) {
+                                movieImagesHTML += `
+                                    <img src="${movie.Poster || 'https://placehold.co/150x225?text=No+Poster'}" 
+                                        alt="${movie.Title || 'Movie'}" 
+                                        class="playlist-movie-poster"
+                                        title="${movie.Title || ''}${movie.Year ? ` (${movie.Year})` : ''}">`;
+                            });
+
+                            if (movies.length > 4) {
+                                movieImagesHTML += `
+                                    <div class="more-movies">
+                                        +${movies.length - 4} more
+                                    </div>`;
+                            }
+
+                            playlistElement.innerHTML = `
+                                <div class="playlist-header">
+                                    <h3>${playlist.playlist_name}</h3>
+                                    <p>Created by: ${playlist.created_by}</p>
+                                    <a href="/playlist/${playlist.playlist_id}" class="p_link">See All</a>
+                                    <a href="/edit_playlist/${playlist.playlist_id}" class="p_link">Edit</a>
+                                    <a href=""
+                                </div>
+                                <div class="playlist-movies">
+                                    ${movieImagesHTML}
+                                </div>
+                            `;
+
+                            container.appendChild(playlistElement);
+
+                        });
+                    }
+
+                    document.getElementById('myPlaylistsContainer').style.display = 'block';
+                    window.scrollTo({
+                        top: document.getElementById('myPlaylistsContainer').offsetTop,
+                        behavior: 'smooth'
+                    });
+                })
+                .catch(err => {
+                    console.error('Error loading my playlists:', err);
+                });
+        }
+        function closeMyPlaylists() {
+            document.getElementById('myPlaylistsContainer').style.display = 'none';
+        }
+
+
+    </script>
+    <div id="likedMoviesContainer" style="display:none; padding: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2 style="margin: 0;">Your Liked Movies</h2>
+            <button onclick="closeLikedMovies()" style="background: crimson; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                ✖
+            </button>
+        </div>
+        <div id="likedMoviesGrid" style="margin-top: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;"></div>
+    </div>
+    <div id="likedPlaylistsContainer" style="display:none; padding: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2 style="margin: 0;">Your Liked Playlists</h2>
+            <button onclick="closeLikedPlaylists()" style="background: crimson; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                ✖
+            </button>
+        </div>
+        <div id="likedPlaylistsGrid" style="margin-top: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;"></div>
+    </div>
+    <div id="myPlaylistsContainer" style="display:none; padding: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2 style="margin: 0;">Your Playlists</h2>
+            <button onclick="closeMyPlaylists()" style="background: crimson; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                ✖
+            </button>
+        </div>
+        <div id="myPlaylistsGrid" style="margin-top: 20px;"></div>
+    </div>
+</body>
+</html>
