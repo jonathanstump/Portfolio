@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Sign Up Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='first_page.css') }}">
+    <style>
+        .hidden{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="loginContainer" class="modal" style="display: block;">
+        <div class="modal-content">
+            <h2>Login</h2>
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="Login()">Login</button>
+            <p>Don't have an account? <a href="#" onclick="showSignup()">Sign up</a></p>
+        </div>
+    </div>
+
+    <div id="signupContainer" class="modal hidden">
+        <div class="modal-content">
+            <h2>Sign Up</h2>
+            <input type="text" id="firstN" placeholder="First Name">
+            <input type="text" id="lastN" placeholder="Last Name">
+            <input type="email" id="emailInput" placeholder="Email">
+            <input type="text" id="signupUsername" placeholder="Username">
+            <input type="password" id="signupPassword" placeholder="Password">
+            <button onclick="SignUp()">Sign Up</button>
+            <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+        </div>
+    </div>
+    
+    <script>
+        function Login(){
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value; 
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var response = JSON.parse(this.responseText); 
+                    if (response.success) {
+                        loginSuccessful();
+                    } else {
+                        alert(response.message); 
+                    }
+                }
+            };
+            xhttp.open("POST", "/login", true);
+            xhttp.setRequestHeader('Content-Type', 'application/json');
+            xhttp.send(JSON.stringify({
+                username: username,
+                password: password
+            }));
+        }
+        function SignUp(){
+            var first_name = document.getElementById('firstN').value;
+            var last_name = document.getElementById('lastN').value;
+            var email = document.getElementById('emailInput').value;
+            var username = document.getElementById('signupUsername').value;
+            var password = document.getElementById('signupPassword').value;
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var response = JSON.parse(this.responseText);
+                    if (response.success) {
+                        loginSuccessful();
+                    } else {
+                        alert(response.message);
+                    }
+                }
+            };
+            xhttp.open("POST", "/signUp", true);
+            xhttp.setRequestHeader('Content-Type', 'application/json');
+            xhttp.send(JSON.stringify({
+                first_name: first_name,
+                last_name: last_name,
+                email: email,
+                username: username,
+                password: password
+            }));
+        }
+        function showSignup(){
+            document.getElementById('loginContainer').classList.add('hidden');
+            document.getElementById('signupContainer').classList.remove('hidden');
+        }
+        function showLogin(){
+            document.getElementById('signupContainer').classList.add('hidden');
+            document.getElementById('loginContainer').classList.remove('hidden');
+        }
+        function loginSuccessful(){
+            window.location.href = '/index';
+        }
+        function checkLogin(){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var results = JSON.parse(this.responseText);
+                    if (results.login) {
+                        window.location.href = '/index';
+                    }
+                };
+            }
+            xhttp.open("GET", "/loginCheck", true);
+            xhttp.send();
+        }
+        checkLogin();
+    </script>
+</body>
+</html>
