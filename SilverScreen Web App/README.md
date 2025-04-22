@@ -5,6 +5,8 @@ A full-stack application that lets users search, create, and share custom movie 
 ## 💡 Project Overview
 Built to help users discover and organize movies in themed playlists using a clean and interactive UI.
 
+![Flow Diagram](Flow%20Diagram%20SS.png)
+
 ## 🧠 Motivation
 - **The Problem:** How do we find new entertainment media?
 - **Currently:** Spread by word of mouth, social media – not a targeted environment
@@ -33,5 +35,3 @@ Built to help users discover and organize movies in themed playlists using a cle
 - Posting playlists to main feed
 - Total likes per user displayed on profile
 - AI suggestions for playlist creation
-
-!![Overview](images/overview.png)
