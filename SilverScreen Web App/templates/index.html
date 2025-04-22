@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Silver Screen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='menubar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body>
+    <script id="replace_with_navbar" src="{{ url_for('static', filename='menu.js') }}"></script>
+
+    <div class="trending">Trending Movies</div>
+    <div class="filmstrip" id="movies-strip"></div>
+
+    <div class="trending">Trending Playlists</div>
+    <div class="filmstrip" id="playlists-strip"></div>
+
+    <div id="movie-data" class="modal">
+        <div class="modal-content">
+            <span onclick="removeMovieData()" class="close">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        function removeMovieData() {
+            document.getElementById('movie-data').style.display = 'none';
+        }
+
+        async function getIMDBID(title) {
+            try{
+                const response = await fetch(`search/${title}`);
+                const result = await response.json();
+                return result.Search[0].imdbID;
+            } catch (error) {
+                console.error("Error getting IMDB ID:", error);
+                return null;
+            }
+        }
+
+        async function movieClick(movie) {
+            try {
+                const imdbID = await getIMDBID(movie.title);
+                if (!imdbID) return;
+                const response = await fetch(`movie/${imdbID}`);
+                const movieDetails = await response.json();
+                displayMovieDetails(movieDetails);
+            } catch (error) {
+                console.error("Error loading movie:", error);
+            }
+        }
+
+        function displayMovieDetails(movie) {
+            const modalBody = document.getElementById('modal-body');
+            const key = movie.Title + movie.Year;
+            let stored = localStorage.getItem(`movie_${key}`);
+            let storedData = stored ? JSON.parse(stored) : null;
+            let likeCount = storedData?.likes || 0;
+            let isLiked = storedData ? storedData.liked === true : false;
+
+            if (!movie.Poster || movie.Poster === "N/A") {
+                movie.Poster = "https://placehold.co/150x225?text=No+Poster";
+            }
+
+            const likeClass = isLiked ? "like-button-liked" : "like-button";
+
+            modalBody.innerHTML = `
+                <h2>${movie.Title}</h2>
+                <h4>Released: ${movie.Released}</h4>
+                <h4>Genre: ${movie.Genre}</h4>
+                <h4>Language: ${movie.Language}</h4>
+                <h4>Directed by: ${movie.Director}</h4>
+                <h4>Writer: ${movie.Writer}</h4>
+                <h4>Actors: ${movie.Actors}</h4>
+                <h4>Metascore: ${movie.Metascore}</h4>
+                <h4>IMDB Rating: ${movie.imdbRating}</h4>
+                <p>${movie.Plot}</p>
+                <button id="like-btn" class="${likeClass}" onclick="toggleLike('${key}', '${movie.Title}', '${movie.Year}', '${movie.Poster}')">
+                    ${isLiked ? "❤️" : "🤍"} Like (${likeCount})
+                </button>
+            `;
+
+            fetchLikeData(key);
+            document.getElementById('movie-data').style.display = 'block';
+        }
+
+        function toggleLike(key, title, year, poster) {
+            fetch('/like_movie', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ key, title, year, poster })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    fetchLikeData(key);
+                } else {
+                    alert(data.message);
+                }
+            });
+        }
+
+        function fetchLikeData(key) {
+            fetch(`/movie_likes/${key}`)
+                .then(res => res.json())
+                .then(data => {
+                    const btn = document.getElementById("like-btn");
+                    const heart = data.liked ? "❤️" : "🤍";
+                    if (btn) {
+                        btn.classList.toggle("like-button-liked", data.liked);
+                        btn.innerText = `${heart} Like (${data.likes})`;
+                    }
+                });
+        }
+
+        function fetchPlaylistLikeData(playlistId) {
+            fetch(`/playlist_likes/${playlistId}`)
+                .then(res => res.json())
+                .then(data => {
+                    const heart = data.liked ? "❤️" : "🤍";
+                    const countSpan = document.getElementById(`like-count-playlist-${playlistId}`);
+                    const btn = document.getElementById(`like-button-playlist-${playlistId}`);
+                    if (countSpan) {
+                        countSpan.innerText = `${heart} ${data.likes}`;
+                    }
+                    if (btn) {
+                        btn.innerText = `${heart} Like`;
+                        btn.classList.toggle("like-button-liked", data.liked);
+                    }
+                });
+        }
+
+        function loadTrendingMovies() {
+            fetch('/top_movies')
+                .then(res => res.json())
+                .then(movies => {
+                    const filmstrip = document.getElementById('movies-strip');
+                    movies.forEach(movie => {
+                        const anchor = document.createElement("a");
+                        anchor.href = "#";
+                        anchor.innerHTML = `
+                            <div class="icon-container">
+                                <img src="${movie.poster}" alt="${movie.title}" width="80">
+                                <span class="movie-title">${movie.title} (${movie.year})</span>
+                            </div>
+                        `;
+                        anchor.addEventListener("click", () => movieClick(movie));
+                        filmstrip.appendChild(anchor);
+                    });
+                });
+        }
+
+        function loadTrendingPlaylists() {
+            fetch('/top_playlists')
+                .then(res => res.json())
+                .then(playlists => {
+                    const filmstrip = document.getElementById('playlists-strip');
+                    filmstrip.innerHTML = "";
+                    playlists.forEach(playlist => {
+                        const playlistElement = document.createElement("div");
+                        playlistElement.className = "playlist-item";
+                        let movies = [];
+                        try {
+                            const data = JSON.parse(playlist.playlist_data);
+                            movies = data.movies || [];
+                        } catch (e) {
+                            console.error("Playlist parse error:", e);
+                        }
+                        const posters = movies.slice(0, 4).map(movie => `
+                            <img src="${movie.Poster || 'https://via.placeholder.com/150'}" 
+                                 alt="${movie.Title}" 
+                                 class="playlist-movie-poster"
+                                 title="${movie.Title} (${movie.Year})">
+                        `).join("");
+                        const likeSpanId = `like-count-playlist-${playlist.playlist_id}`;
+                        const likeButtonId = `like-button-playlist-${playlist.playlist_id}`;
+                        playlistElement.innerHTML = `
+                            <div class="playlist-header">
+                                <h3>${playlist.playlist_name}</h3>
+                                <p>Created by: ${playlist.created_by}</p>
+                                <span class="like-display" id="${likeSpanId}">❤️ 0</span>
+                                <a href="/playlist/${playlist.playlist_id}" class="p_link">See All</a>
+                            </div>
+                            <div class="playlist-movies">${posters}</div>
+                        `;
+                        filmstrip.appendChild(playlistElement);
+                        fetchPlaylistLikeData(playlist.playlist_id);
+                    });
+                })
+                .catch(err => {
+                    console.error("Error loading trending playlists:", err);
+                });
+        }
+
+        window.onload = function () {
+            loadTrendingMovies();
+            loadTrendingPlaylists();
+        };
+    </script>
+</body>
+</html>
