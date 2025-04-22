@@ -1,0 +1,143 @@
+body {
+    font-family: Tahoma, sans-serif;
+    background-color: lightgray;
+    text-align: center;
+}
+.trending {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: left;
+}
+.filmstrip {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 20px 0;
+}
+.playlist-item {
+    flex: 0 0 auto;
+    width: 280px;
+    background-color: #2c2c3e;
+    color: white;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+.playlist-item h3 {
+    margin: 0;
+    font-size: 18px;
+    text-transform: lowercase;
+}
+.playlist-item p {
+    font-size: 14px;
+    color: #ccc;
+    margin: 6px 0;
+}
+.like-display {
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
+    color: black;
+}
+.like-button {
+    margin-top: 5px;
+    background-color: lightgray;
+    color: black;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+.like-button-liked {
+    background-color: #ff6961;
+    color: black;
+}
+.like-button:hover {
+    background-color: #cc4444;
+}
+.playlist-movies {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+}
+.playlist-movie-poster {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    object-fit: cover;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+}
+.filmstrip a {
+    text-decoration: none;
+    color: black;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center; 
+    width: 150px;
+}
+.filmstrip .icon-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+}
+.filmstrip .icon-container img {
+    width: 150px;
+    height: 225px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+.filmstrip .movie-title {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: normal;
+    text-align: center;
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.7);
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 70%;
+    max-width: 600px;
+    border-radius: 12px;
+}
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.close:hover,
+.close:focus {
+    color: black;
+}
+
+.playlist-header h3 {
+    margin: 0;
+    text-transform: lowercase;
+    font-weight: bold;
+}
+
+.playlist-header p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #cfcfcf;
+}
