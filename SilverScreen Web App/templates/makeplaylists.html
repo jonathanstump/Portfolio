@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make Playlists</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='menubar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='search-results.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='makeplaylists.css') }}">
+</head>
+<body>
+    <script id="replace_with_navbar" src="{{ url_for('static', filename='menu.js') }}"></script>
+
+    <div class="playlist-builder">
+        <h2>Make a Movie Playlist</h2>
+        <div class="playlist-form">
+            <input type="text" id="playlistTitle" placeholder="Enter Playlist Title">
+            <input type="text" id="searchInput" placeholder="Search for a movie to add...">
+        </div>
+
+        <div id="results-container"></div>
+
+        <div id="playlistPreview">
+            <h3>Current Playlist:</h3>
+            <div id="playlistMovies"></div>
+            <button onclick="submit()">Submit Playlist</button>
+        </div>
+    </div>
+
+    <div id="playlistData"
+        data-playlist-name="{{ playlist_name or '' }}"
+        data-movies="{{ playlist_data or '[]' }}"
+        data-playlist-id="{{ playlist_id or '' }}">
+    </div>
+
+    <script>
+        let currentPlaylist = [];
+
+        document.getElementById("searchInput").addEventListener("input", () => {
+            const query = document.getElementById("searchInput").value;
+            if (query.length >= 3) {
+                searchMovies(query);
+            } else {
+                document.getElementById("results-container").innerHTML = "";
+            }
+        });
+
+        function searchMovies(query) {
+            fetch(`/search/${query}`)
+                .then(res => res.json())
+                .then(data => {
+                    const container = document.getElementById("results-container");
+                    container.innerHTML = "";
+                    if (data.Response !== "True") {
+                        container.innerHTML = "<p>No results found.</p>";
+                        return;
+                    }
+
+                    data.Search.forEach(movie => {
+                        const item = document.createElement("div");
+                        item.className = "result-item";
+                        item.innerHTML = `
+                            <img src="${movie.Poster}" alt="${movie.Title}">
+                            <div class="movie-title">
+                                <h3>${movie.Title} (${movie.Year})</h3>
+                                <button onclick='addToPlaylist(${JSON.stringify(movie)})'>Add</button>
+                            </div>
+                        `;
+                        container.appendChild(item);
+                    });
+                });
+        }
+
+        function addToPlaylist(movie) {
+            const exists = currentPlaylist.find(m => m.imdbID === movie.imdbID);
+            if (!exists) {
+                currentPlaylist.push(movie);
+                renderPlaylist();
+            }
+        }
+
+        function removeFromPlaylist(imdbID) {
+            currentPlaylist = currentPlaylist.filter(m => m.imdbID !== imdbID);
+            renderPlaylist();
+        }
+
+        function renderPlaylist() {
+            const container = document.getElementById("playlistMovies");
+            container.innerHTML = "";
+
+            currentPlaylist.forEach(movie => {
+                const div = document.createElement("div");
+                div.className = "playlist-movie";
+                div.innerHTML = `
+                    <img src="${movie.Poster}" alt="${movie.Title}">
+                    <span>${movie.Title} (${movie.Year})</span>
+                    <button onclick="removeFromPlaylist('${movie.imdbID}')">Remove</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function submit() {
+            const title = document.getElementById("playlistTitle").value.trim();
+            if (!title || currentPlaylist.length === 0) {
+                alert("Please enter a title and add at least one movie.");
+                return;
+            }
+
+            const playlistId = document.getElementById('playlistData').dataset.playlistId;
+            if(playlistId){
+                update(title, playlistId);
+                return;
+            }
+
+            fetch('/getUsername')
+                .then(response => response.text())
+                .then(username => {
+                    const playlistData = {
+                        username: username,
+                        playlist_name: title,
+                        playlist_data: { movies: currentPlaylist }
+                    };
+
+                    fetch('/submitPlaylist', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(playlistData)
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert("Playlist created!");
+                            window.location.href = "/index";
+                        } else {
+                            alert("Error creating playlist: " + data.message);
+                        }
+                    });
+                });
+        }
+        function update(title, playlistId){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var response = JSON.parse(this.responseText); 
+                    if (response.success) {
+                        alert(response.message);
+                        window.location.href = "/profile";
+                    } else {
+                        alert(response.message); 
+                    }
+                }
+            };
+            xhttp.open("PUT", "/update_playlist", true);
+            xhttp.setRequestHeader('Content-Type', 'application/json');
+            xhttp.send(JSON.stringify({
+                title: title,
+                playlistId: playlistId,
+                playlist_data: { movies: currentPlaylist }
+            }));
+        }
+        function loadPlaylist() {
+            const data = document.getElementById('playlistData');
+
+            document.getElementById('playlistTitle').value = data.dataset.playlistName || '';
+            const playlistData = JSON.parse(data.dataset.movies || '{}');
+            currentPlaylist = playlistData.movies || [];
+            renderPlaylist();
+        }
+        loadPlaylist();
+    </script>
+</body>
+</html>
