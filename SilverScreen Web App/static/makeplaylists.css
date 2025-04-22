@@ -1,0 +1,49 @@
+.playlist-builder {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+.playlist-form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+#results-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.result-item {
+    width: 150px;
+    text-align: center;
+}
+.result-item img {
+    width: 100%;
+    height: auto;
+}
+.playlist-movie {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.playlist-movie img {
+    width: 60px;
+    height: auto;
+    margin-right: 10px;
+}
+.playlist-movie button {
+    margin-left: auto;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+#playlistPreview {
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+}
+.hidden {
+    display: none;
+}
