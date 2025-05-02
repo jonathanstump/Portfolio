@@ -4,9 +4,6 @@ from functools import wraps
 import hashlib
 
 app = Flask(__name__)
-OMDB_API_KEY = '52dce214'
-app.secret_key = '83476982749528498-SILVERSCREEN_PLAYLISTS_2025'
-mySalt = "silverscreen-2025"
 
 def hash(salt, str):
     fullStr = salt + str
