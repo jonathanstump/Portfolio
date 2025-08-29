@@ -1,0 +1,98 @@
+export const styles = {
+  container: {
+    padding: '40px 20px',
+    maxWidth: '1000px',
+    margin: '0 auto',
+    fontFamily: "'Inter', sans-serif",
+    color: '#023D54',
+  },
+  headerRow: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: '30px',
+    position: 'relative',
+  },
+  title: {
+    fontSize: '32px',
+    fontWeight: '700',
+  },
+  addExperimentButton: {
+    position: 'fixed',
+    bottom: 30,
+    right: 30,
+    width: 56,
+    height: 56,
+    borderRadius: '50%',
+    backgroundColor: '#5ca67c',
+    color: '#fff',
+    fontSize: 32,
+    fontWeight: 'bold',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    cursor: 'pointer',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+    border: 'none',
+    transition: 'background-color 0.2s ease',
+  },
+  groupsContainer: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '20px',
+    justifyContent: 'center',
+    marginBottom: '40px',
+  },
+  imagesSection: {
+    marginTop: '40px',
+  },
+  sectionTitle: {
+    fontSize: '24px',
+    fontWeight: '600',
+    marginBottom: '20px',
+    textAlign: 'center',
+  },
+  imagesGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+    gap: '20px',
+  },
+  imageCard: {
+    background: '#fff',
+    borderRadius: '12px',
+    boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+    padding: '12px',
+    textAlign: 'center',
+    transition: 'transform 0.2s ease',
+  },
+  image: {
+    width: '100%',
+    height: 'auto',
+    borderRadius: '8px',
+    marginBottom: '12px',
+  },
+  imageButtons: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    gap: '10px',
+  },
+  actionButton: {
+    flex: 1,
+    padding: '8px 12px',
+    border: 'none',
+    borderRadius: '6px',
+    fontSize: '14px',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: 'background-color 0.2s ease',
+    color: '#fff',
+  },
+  approveButton: {
+    backgroundColor: '#4CAF50',
+  },
+  rejectButton: {
+    backgroundColor: '#E74C3C',
+  },
+}
+
+export default styles
