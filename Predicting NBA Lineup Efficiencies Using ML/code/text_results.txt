@@ -1,0 +1,813 @@
+=== Cluster Summary for PF ===
+Cluster sizes:
+cluster
+0     5
+1    18
+2    27
+3     2
+4    29
+5    13
+Name: count, dtype: int64
+
+Cluster means:
+         Turnovers  LiveBallTurnovers     Fouls  Charge Fouls  ...   Arc3FGA  Arc3Accuracy  NonHeaveArc3FGA  NonHeaveArc3Accuracy
+cluster                                                        ...                                                               
+0         4.090478           2.743974  1.459031      0.124230  ...  8.061646      0.340849       331.400000              0.344195
+1         2.021012           0.995254  2.448974      0.062925  ...  1.699764      0.170357        27.833333              0.171696
+2         2.221278           1.270636  1.717270      0.076499  ...  5.366406      0.349629       153.962963              0.352139
+3         4.707347           2.489672  1.976884      0.445929  ...  0.973378      0.241667        35.000000              0.255008
+4         1.858524           1.090031  2.122621      0.041177  ...  5.517880      0.354792        95.310345              0.357530
+5         3.227844           1.921074  1.892331      0.137291  ...  5.151584      0.338473       133.000000              0.343118
+
+[6 rows x 76 columns]
+
+Top features differentiating clusters:
+NonHeaveArc3FGA    12361.909924
+Points                97.416275
+Usage                 64.540217
+FG2A                  59.915023
+AssistPoints          39.823903
+dtype: float64
+
+Cluster 0 top differing stats (standardized):
+PtsUnassisted3s               2.427157
+LongMidRangePctAssisted      -2.298289
+Avg2ptShotDistance            2.229606
+NonHeaveArc3FGA               2.179976
+ThreePtShootingFoulsDrawn     2.168915
+LongMidRangeFrequency         2.115858
+3pt And 1 Free Throw Trips    2.075212
+LongMidRangeFGA               1.952112
+ShotQualityAvg               -1.880707
+Assisted2sPct                -1.688808
+dtype: float64
+
+Cluster 1 top differing stats (standardized):
+NonHeaveArc3Accuracy   -2.111964
+LongMidRangeAccuracy   -2.080568
+Arc3Accuracy           -2.037933
+OffThreePtReboundPct    1.945232
+OffThreePtRebounds      1.831175
+Fouls                   1.811584
+OffRebounds             1.665606
+NonHeaveFg3Pct         -1.616074
+OffFGReboundPct         1.581520
+ShotQualityAvg          1.549909
+dtype: float64
+
+Cluster 2 top differing stats (standardized):
+DefAtRimReboundPct     -2.172459
+DefTwoPtReboundPct     -1.851638
+DefTwoPtRebounds       -1.711231
+Steals                 -1.692164
+AtRimAccuracy          -1.586012
+Rebounds               -1.482413
+Blocks                 -1.440227
+Corner3FGA              1.391445
+DefRebounds            -1.375370
+DefThreePtReboundPct   -1.184046
+dtype: float64
+
+Cluster 3 top differing stats (standardized):
+Corner3PctAssisted           -2.438720
+Charge Fouls                  2.375956
+UnblockedCorner3Accuracy     -2.362223
+TsPct                         2.356593
+Corner3Accuracy              -2.351603
+AtRimFGA                      2.312704
+2pt And 1 Free Throw Trips    2.301736
+Avg3ptShotDistance            2.289064
+TwoPtShootingFoulsDrawn       2.269165
+EfgPct                        2.226720
+dtype: float64
+
+Cluster 4 top differing stats (standardized):
+ShortMidRangeFrequency   -2.063721
+ShortMidRangeAccuracy    -1.970271
+AtRimFG3AFrequency        1.802195
+NonShootingFoulsDrawn    -1.655025
+FG3APct                   1.639226
+Corner3Frequency          1.556309
+ShortMidRangeFGA         -1.544257
+PtsAssisted2s            -1.383118
+FG2A                     -1.344748
+ShootingFoulsDrawnPct    -1.333002
+dtype: float64
+
+Cluster 5 top differing stats (standardized):
+LongMidRangePctBlocked    1.890709
+DefAtRimReboundPct        1.378875
+Fg2Pct                   -1.228786
+DefTwoPtRebounds          1.186044
+AtRimAccuracy            -1.161594
+DefTwoPtReboundPct        1.064981
+EfgPct                   -1.040732
+ShortMidRangeFrequency    0.998434
+DefRebounds               0.946493
+TsPct                    -0.924757
+dtype: float64
+
+=== Closest Players to Cluster Centers for PF ===
+
+Cluster 0 (top 10 closest):
+  1. Paolo Banchero (distance=4.6684)
+  2. Scottie Barnes (distance=4.8492)
+  3. Paul George (distance=5.0021)
+  4. Kevin Durant (distance=5.4210)
+  5. Jayson Tatum (distance=6.4835)
+
+Cluster 1 (top 10 closest):
+  1. Jeremy Sochan (distance=3.4791)
+  2. Karlo Matković (distance=3.9137)
+  3. Dominick Barlow (distance=4.0914)
+  4. Jonathan Mogbo (distance=4.1637)
+  5. Jabari Walker (distance=4.4184)
+  6. Tari Eason (distance=4.7436)
+  7. Zach Collins (distance=4.9257)
+  8. Olivier-Maxence Prosper (distance=5.0567)
+  9. Kobe Brown (distance=5.4457)
+  10. Mouhamed Gueye (distance=5.6074)
+
+Cluster 2 (top 10 closest):
+  1. Patrick Williams (distance=3.0896)
+  2. Jaden McDaniels (distance=3.1668)
+  3. OG Anunoby (distance=3.3998)
+  4. Jalen Wilson (distance=3.4132)
+  5. Santi Aldama (distance=3.4193)
+  6. Nikola Jović (distance=3.4817)
+  7. Rui Hachimura (distance=3.6168)
+  8. Jabari Smith Jr. (distance=3.8971)
+  9. Jarace Walker (distance=3.9482)
+  10. David Roddy (distance=4.0928)
+
+Cluster 3 (top 10 closest):
+  1. Giannis Antetokounmpo (distance=4.2301)
+  2. Zion Williamson (distance=4.2301)
+
+Cluster 4 (top 10 closest):
+  1. Trey Lyles (distance=2.2689)
+  2. Kenrich Williams (distance=2.4035)
+  3. Keegan Murray (distance=2.9512)
+  4. Grant Williams (distance=3.6614)
+  5. Toumani Camara (distance=3.8133)
+  6. Dean Wade (distance=3.9088)
+  7. Hunter Tyson (distance=3.9749)
+  8. Jeremiah Robinson-Earl (distance=4.0771)
+  9. Dorian Finney-Smith (distance=4.1677)
+  10. Larry Nance Jr. (distance=4.2264)
+
+Cluster 5 (top 10 closest):
+  1. P.J. Washington (distance=2.6711)
+  2. John Collins (distance=3.5289)
+  3. Pascal Siakam (distance=3.6856)
+  4. Julius Randle (distance=4.1614)
+  5. Drew Timme (distance=4.1957)
+  6. Jonathan Kuminga (distance=4.8785)
+  7. Evan Mobley (distance=5.1200)
+  8. Miles Bridges (distance=5.3795)
+  9. Bobby Portis (distance=5.9710)
+  10. Lamar Stevens (distance=6.2665)
+=== Cluster Summary for PG ===
+Cluster sizes:
+cluster
+0    34
+1    23
+2    27
+3     6
+Name: count, dtype: int64
+
+Cluster means:
+         Turnovers  LiveBallTurnovers     Fouls  Charge Fouls  ...    Arc3FGA  Arc3Accuracy  NonHeaveArc3FGA  NonHeaveArc3Accuracy
+cluster                                                        ...                                                                
+0         2.641199           1.715706  1.880956      0.039179  ...   7.336770      0.350517       140.000000              0.354673
+1         2.930738           1.948478  1.898084      0.055706  ...   3.794170      0.302903        73.130435              0.304895
+2         3.837595           2.479247  1.626034      0.045668  ...   7.723999      0.336631       265.925926              0.340804
+3         4.906950           3.358133  1.707517      0.048180  ...  10.959951      0.360489       475.333333              0.363104
+
+[4 rows x 76 columns]
+
+Top features differentiating clusters:
+NonHeaveArc3FGA    31297.171442
+Points                90.332272
+Usage                 52.286535
+PtsUnassisted2s       18.474117
+FG2A                  16.964165
+dtype: float64
+
+Cluster 0 top differing stats (standardized):
+ShortMidRangeFrequency   -1.970434
+FG3APct                   1.958857
+AtRimFGA                 -1.868667
+PtsAssisted2s            -1.859880
+AtRimFG3AFrequency        1.823646
+PtsAssisted3s             1.727471
+DefThreePtReboundPct     -1.683451
+PtsPutbacks              -1.657840
+OffAtRimReboundPct       -1.648774
+AtRimFrequency           -1.647866
+dtype: float64
+
+Cluster 1 top differing stats (standardized):
+OffRebounds                 1.991089
+OffFGReboundPct             1.990611
+OffThreePtReboundPct        1.988199
+OffThreePtRebounds          1.983056
+LongMidRangeAccuracy       -1.961113
+NonHeaveFg3Pct             -1.930189
+ShotQualityAvg              1.929794
+Avg2ptShotDistance         -1.926542
+UnblockedCorner3Accuracy   -1.896145
+Corner3Accuracy            -1.887379
+dtype: float64
+
+Cluster 2 top differing stats (standardized):
+OnDefRtg                    1.790422
+Fouls                      -1.524742
+Steals                     -1.372825
+UnblockedCorner3Accuracy    1.046248
+Corner3Accuracy             1.045855
+PtsAssisted2s               1.014038
+LongMidRangePctBlocked     -0.985823
+AtRimFG3AFrequency         -0.937689
+LongMidRangeFrequency       0.889958
+OffTwoPtReboundPct         -0.856691
+dtype: float64
+
+Cluster 3 top differing stats (standardized):
+ThreePtShootingFoulsDrawn    1.931992
+DefTwoPtRebounds             1.919136
+DefAtRimReboundPct           1.907985
+DefTwoPtReboundPct           1.884726
+FtPoints                     1.811331
+FTA                          1.799533
+LiveBallTurnovers            1.797603
+NonHeaveArc3FGA              1.784228
+ThreePtAssists               1.768818
+DefRebounds                  1.762380
+dtype: float64
+
+=== Closest Players to Cluster Centers for PG ===
+
+Cluster 0 (top 10 closest):
+  1. Reggie Jackson (distance=2.5741)
+  2. Mike Conley (distance=3.0737)
+  3. Jose Alvarado (distance=3.0898)
+  4. Aaron Holiday (distance=3.2521)
+  5. Marcus Smart (distance=3.3470)
+  6. Cameron Payne (distance=3.6262)
+  7. Marcus Sasser (distance=3.6603)
+  8. Keaton Wallace (distance=3.8500)
+  9. Monté Morris (distance=3.8709)
+  10. Fred VanVleet (distance=4.1026)
+
+Cluster 1 (top 10 closest):
+  1. Anthony Black (distance=3.9923)
+  2. Killian Hayes (distance=4.4303)
+  3. Devin Carter (distance=4.4469)
+  4. Terry Rozier (distance=4.6796)
+  5. Jrue Holiday (distance=4.7866)
+  6. Bruce Brown (distance=4.8242)
+  7. KJ Simpson (distance=4.9441)
+  8. Craig Porter Jr. (distance=5.4754)
+  9. Scotty Pippen Jr. (distance=5.6540)
+  10. Kris Dunn (distance=5.7847)
+
+Cluster 2 (top 10 closest):
+  1. Darius Garland (distance=3.1388)
+  2. Dennis Schröder (distance=3.5402)
+  3. Immanuel Quickley (distance=3.5652)
+  4. De'Aaron Fox (distance=3.5714)
+  5. Scoot Henderson (distance=3.6604)
+  6. Spencer Dinwiddie (distance=3.9863)
+  7. D'Angelo Russell (distance=4.0786)
+  8. CJ McCollum (distance=4.1565)
+  9. Keyonte George (distance=4.2237)
+  10. Tyrese Maxey (distance=4.4071)
+
+Cluster 3 (top 10 closest):
+  1. Cade Cunningham (distance=4.4779)
+  2. James Harden (distance=4.4847)
+  3. LaMelo Ball (distance=4.9700)
+  4. Damian Lillard (distance=5.0740)
+  5. Luka Dončić (distance=5.4321)
+  6. Shai Gilgeous-Alexander (distance=6.4109)
+
+=== Cluster Summary for SF ===
+Cluster sizes:
+cluster
+0    23
+1    20
+2    30
+3    13
+Name: count, dtype: int64
+
+Cluster means:
+         Turnovers  LiveBallTurnovers     Fouls  Charge Fouls  ...   Arc3FGA  Arc3Accuracy  NonHeaveArc3FGA  NonHeaveArc3Accuracy
+cluster                                                        ...                                                               
+0         2.022404           1.280882  1.860047      0.034246  ...  7.769600      0.374341       193.695652              0.376936
+1         1.918620           1.189957  2.335134      0.056541  ...  3.034894      0.227076        42.250000              0.227525
+2         2.407677           1.483246  1.906978      0.097343  ...  4.076093      0.314575       113.400000              0.321100
+3         3.768288           2.318987  1.690615      0.102457  ...  7.041774      0.351243       216.076923              0.353914
+
+[4 rows x 76 columns]
+
+Top features differentiating clusters:
+NonHeaveArc3FGA    6308.730902
+Points               43.684466
+Usage                30.202083
+FG2A                 19.002198
+AssistPoints         12.805445
+dtype: float64
+
+Cluster 0 top differing stats (standardized):
+Rebounds                 -1.987364
+AtRimAccuracy            -1.925252
+PtsAssisted3s             1.924924
+LongMidRangePctBlocked    1.907897
+FG3APct                   1.893037
+PtsPutbacks              -1.808398
+OffAtRimReboundPct       -1.808116
+ShootingFoulsDrawnPct    -1.796688
+Steals                   -1.783051
+OffTwoPtReboundPct       -1.768914
+dtype: float64
+
+Cluster 1 top differing stats (standardized):
+TsPct                  -1.999179
+Corner3PctAssisted     -1.998632
+OffThreePtRebounds      1.905422
+Fouls                   1.881627
+NonHeaveArc3Accuracy   -1.874402
+Arc3Accuracy           -1.849619
+OffThreePtReboundPct    1.834317
+EfgPct                 -1.818416
+NonHeaveFg3Pct         -1.780666
+Avg3ptShotDistance     -1.700614
+dtype: float64
+
+Cluster 2 top differing stats (standardized):
+OnDefRtg              1.575814
+PtsPutbacks           1.382014
+OffTwoPtRebounds      1.301448
+AtRimFrequency        1.221366
+OffTwoPtReboundPct    1.219263
+OffAtRimReboundPct    1.210987
+PtsAssisted2s         1.161827
+Fg2Pct                1.155080
+AtRimFGA              1.149163
+Blocks                1.031569
+dtype: float64
+
+Cluster 3 top differing stats (standardized):
+AssistPoints                1.991999
+Assists                     1.991050
+Assisted3sPct              -1.976717
+LongMidRangeFGA             1.976333
+LongMidRangeFrequency       1.967845
+TwoPtAssists                1.957722
+ThreePtAssists              1.948520
+LiveBallTurnovers           1.942581
+NonPutbacksAssisted2sPct   -1.938786
+Turnovers                   1.938121
+dtype: float64
+
+=== Closest Players to Cluster Centers for SF ===
+
+Cluster 0 (top 10 closest):
+  1. Luguentz Dort (distance=2.7613)
+  2. Dalton Knecht (distance=3.6723)
+  3. Jett Howard (distance=3.7753)
+  4. Royce O'Neale (distance=3.7964)
+  5. Taurean Prince (distance=3.8755)
+  6. Julian Champagnie (distance=3.8871)
+  7. Jamison Battle (distance=3.9225)
+  8. Brice Sensabaugh (distance=3.9233)
+  9. Corey Kispert (distance=3.9689)
+  10. Justin Edwards (distance=4.0915)
+
+Cluster 1 (top 10 closest):
+  1. Kris Murray (distance=2.9688)
+  2. Cody Martin (distance=3.5842)
+  3. Tristan da Silva (distance=3.6339)
+  4. Josh Minott (distance=4.1980)
+  5. Dillon Jones (distance=4.2621)
+  6. Ryan Dunn (distance=4.3882)
+  7. Maxwell Lewis (distance=4.4020)
+  8. Julian Phillips (distance=4.5095)
+  9. Herbert Jones (distance=4.7837)
+  10. Haywood Highsmith (distance=5.0265)
+
+Cluster 2 (top 10 closest):
+  1. Kelly Oubre Jr. (distance=2.6518)
+  2. Keldon Johnson (distance=3.1441)
+  3. Jamal Cain (distance=3.3061)
+  4. Tosan Evbuomwan (distance=3.3613)
+  5. Ronald Holland II (distance=3.6207)
+  6. Bilal Coulibaly (distance=3.8933)
+  7. Zaccharie Risacher (distance=3.9886)
+  8. Keion Brooks Jr. (distance=4.2053)
+  9. Naji Marshall (distance=4.2197)
+  10. Ricky Council IV (distance=4.6317)
+
+Cluster 3 (top 10 closest):
+  1. Jaylen Brown (distance=3.2011)
+  2. Kawhi Leonard (distance=3.2270)
+  3. Franz Wagner (distance=3.8247)
+  4. Bennedict Mathurin (distance=4.8190)
+  5. RJ Barrett (distance=5.5759)
+  6. Brandon Ingram (distance=5.8408)
+  7. Andrew Wiggins (distance=5.8816)
+  8. Brandon Miller (distance=6.1853)
+  9. LeBron James (distance=6.7805)
+  10. Deni Avdija (distance=6.8944)
+
+=== Cluster Summary for SG ===
+Cluster sizes:
+cluster
+0    27
+1    27
+2    26
+3    19
+4    37
+Name: count, dtype: int64
+
+Cluster means:
+         Turnovers  LiveBallTurnovers     Fouls  Charge Fouls  ...   Arc3FGA  Arc3Accuracy  NonHeaveArc3FGA  NonHeaveArc3Accuracy
+cluster                                                        ...                                                               
+0         1.769949           1.005245  2.219022      0.040790  ...  4.182378      0.332641        68.111111              0.335766
+1         3.009405           1.787652  1.911122      0.052823  ...  5.772036      0.309825        85.703704              0.312451
+2         3.696610           2.420061  1.581041      0.081150  ...  8.801761      0.365441       359.500000              0.368410
+3         2.358500           1.509117  1.889508      0.049432  ...  3.372041      0.291704        69.473684              0.294231
+4         1.785926           1.115957  1.667353      0.034080  ...  7.865278      0.362508       228.135135              0.364409
+
+[5 rows x 76 columns]
+
+Top features differentiating clusters:
+NonHeaveArc3FGA    16644.325720
+Points                35.904194
+Usage                 23.352450
+AssistPoints          10.739619
+FG2A                   9.927578
+dtype: float64
+
+Cluster 0 top differing stats (standardized):
+Steals                   2.119896
+ShortMidRangeAccuracy   -2.083357
+Blocks                   1.859732
+Fouls                    1.837725
+OnDefRtg                -1.694327
+Corner3Frequency         1.565549
+Fg2Pct                  -1.484961
+AtRimAccuracy           -1.369999
+TsPct                   -1.322789
+Points                  -1.315304
+dtype: float64
+
+Cluster 1 top differing stats (standardized):
+LongMidRangePctBlocked   -1.515800
+EfgPct                   -1.501875
+ShortMidRangeFrequency    1.408236
+AtRimAccuracy            -1.344906
+TsPct                    -1.321792
+AtRimFG3AFrequency       -1.258038
+Corner3PctAssisted        1.240617
+NonHeaveFg3Pct           -1.204135
+ShotQualityAvg           -1.028525
+DefThreePtReboundPct     -0.891642
+dtype: float64
+
+Cluster 2 top differing stats (standardized):
+PtsUnassisted3s               2.180529
+Assisted3sPct                -2.106083
+FoulsDrawn                    2.097719
+FtPoints                      2.070982
+Points                        2.061971
+Charge Fouls                  2.042610
+FTA                           2.020527
+2pt And 1 Free Throw Trips    2.005416
+PtsUnassisted2s               2.002582
+Usage                         1.995621
+dtype: float64
+
+Cluster 3 top differing stats (standardized):
+PtsPutbacks           2.179388
+OffAtRimReboundPct    2.138563
+DefTwoPtReboundPct    2.117582
+Rebounds              2.109514
+DefRebounds           2.104989
+DefAtRimReboundPct    2.096456
+DefTwoPtRebounds      2.076937
+OffTwoPtReboundPct    2.056159
+OffTwoPtRebounds      2.055741
+DefThreePtRebounds    2.023669
+dtype: float64
+
+Cluster 4 top differing stats (standardized):
+LongMidRangePctAssisted     2.203277
+PtsAssisted3s               2.028020
+FG3APct                     1.863948
+AtRimFGA                   -1.671703
+Corner3Accuracy             1.670461
+UnblockedCorner3Accuracy    1.620912
+ShootingFoulsDrawnPct      -1.582311
+AtRimFrequency             -1.552241
+NonHeaveFg3Pct              1.462983
+FG3A                        1.421951
+dtype: float64
+
+=== Closest Players to Cluster Centers for SG ===
+
+Cluster 0 (top 10 closest):
+  1. DaQuan Jeffries (distance=3.4100)
+  2. Cason Wallace (distance=3.8362)
+  3. Javonte Green (distance=4.1195)
+  4. Dalen Terry (distance=4.2066)
+  5. Ja'Kobe Walter (distance=4.3140)
+  6. Ben Sheppard (distance=4.4204)
+  7. Alex Caruso (distance=4.4553)
+  8. Kyshawn George (distance=4.5162)
+  9. Isaac Okoro (distance=4.7376)
+  10. Johnny Davis (distance=4.8286)
+
+Cluster 1 (top 10 closest):
+  1. Shake Milton (distance=3.1487)
+  2. Malaki Branham (distance=4.1822)
+  3. Ajay Mitchell (distance=4.2129)
+  4. Brandon Boston (distance=4.3381)
+  5. Bradley Beal (distance=4.4922)
+  6. Keon Johnson (distance=4.5391)
+  7. Colby Jones (distance=4.8777)
+  8. Jaden Hardy (distance=4.8939)
+  9. AJ Johnson (distance=4.9245)
+  10. Andrew Nembhard (distance=4.9350)
+
+Cluster 2 (top 10 closest):
+  1. Kyrie Irving (distance=2.6250)
+  2. Austin Reaves (distance=3.1912)
+  3. Malik Monk (distance=3.8774)
+  4. Coby White (distance=3.8802)
+  5. Jordan Clarkson (distance=4.1251)
+  6. Shaedon Sharpe (distance=4.2935)
+  7. Tyler Herro (distance=4.2954)
+  8. Jalen Green (distance=4.3153)
+  9. Zach LaVine (distance=4.4409)
+  10. Donovan Mitchell (distance=4.4749)
+
+Cluster 3 (top 10 closest):
+  1. Wendell Moore Jr. (distance=2.0973)
+  2. Terance Mann (distance=4.3690)
+  3. Aaron Wiggins (distance=4.6723)
+  4. Jaylon Tyson (distance=4.8108)
+  5. Rayan Rupert (distance=4.9876)
+  6. Pat Connaughton (distance=5.0022)
+  7. Andre Jackson Jr. (distance=5.4287)
+  8. Vince Williams Jr. (distance=5.4447)
+  9. Dyson Daniels (distance=5.4911)
+  10. Jared Rhoden (distance=5.5827)
+
+Cluster 4 (top 10 closest):
+  1. Johnny Juzang (distance=3.0633)
+  2. Bogdan Bogdanović (distance=3.1005)
+  3. Nickeil Alexander-Walker (distance=3.1410)
+  4. Buddy Hield (distance=3.2649)
+  5. Kevin Huerter (distance=3.3429)
+  6. Max Christie (distance=3.4267)
+  7. Jaylen Wells (distance=3.7137)
+  8. Gary Trent Jr. (distance=3.7635)
+  9. Miles McBride (distance=3.7713)
+  10. Grayson Allen (distance=3.8454)
+
+=== Cluster Summary for C ===
+Cluster sizes:
+cluster
+0    15
+1    12
+2    23
+3    14
+4    13
+5    16
+Name: count, dtype: int64
+
+Cluster means:
+         Turnovers  LiveBallTurnovers     Fouls  Charge Fouls  ...   Arc3FGA  Arc3Accuracy  NonHeaveArc3FGA  NonHeaveArc3Accuracy
+cluster                                                        ...                                                               
+0         2.418259           1.188638  2.564846      0.057105  ...  0.922366      0.090839        13.466667              0.091462
+1         2.032590           1.105884  1.947865      0.052948  ...  6.444711      0.335333       158.916667              0.336309
+2         2.614840           1.354010  2.600927      0.043059  ...  2.691361      0.255341        65.304348              0.255959
+3         2.402776           1.161661  3.019248      0.086553  ...  0.077206      0.017857         0.785714              0.017857
+4         3.863830           2.081334  2.191511      0.184910  ...  5.880671      0.355459       176.923077              0.360027
+5         2.948676           1.355838  2.624126      0.065342  ...  0.184371      0.019914         4.375000              0.020956
+
+[6 rows x 76 columns]
+
+Top features differentiating clusters:
+NonHeaveArc3FGA       6330.806837
+Avg3ptShotDistance      39.111917
+Points                  32.265727
+Usage                   23.818957
+PtsAssisted3s           14.781541
+dtype: float64
+
+Cluster 0 top differing stats (standardized):
+LongMidRangePctBlocked    2.426331
+Blocks                    2.225016
+PtsPutbacks               1.897372
+OffTwoPtReboundPct        1.882500
+OffRebounds               1.822793
+OffAtRimReboundPct        1.799706
+OffTwoPtRebounds          1.791620
+OffFGReboundPct           1.771946
+OnDefRtg                 -1.716467
+OffThreePtRebounds        1.700610
+dtype: float64
+
+Cluster 1 top differing stats (standardized):
+Corner3Frequency          2.322474
+Corner3FGA                2.271660
+FG3APct                   2.085956
+ShootingFoulsDrawnPct    -2.084708
+PtsAssisted2s            -2.073315
+ShortMidRangeFrequency   -1.902933
+AtRimFGA                 -1.895651
+DefThreePtReboundPct     -1.890514
+Rebounds                 -1.879648
+FG3A                      1.809141
+dtype: float64
+
+Cluster 2 top differing stats (standardized):
+AtRimAccuracy             -1.305180
+TsPct                     -1.299512
+Fg2Pct                    -1.183240
+LongMidRangePctAssisted    1.167799
+EfgPct                    -1.130545
+OnDefRtg                   1.114661
+Assisted3sPct              0.996441
+Corner3PctAssisted         0.905474
+Charge Fouls              -0.879371
+NonHeaveFg3Pct             0.860035
+dtype: float64
+
+Cluster 3 top differing stats (standardized):
+AtRimPctAssisted           2.312072
+LongMidRangePctAssisted   -2.253183
+LongMidRangeAccuracy      -2.146720
+Assisted2sPct              2.111673
+Steals                    -2.092397
+EfgPct                     2.032197
+Fg2Pct                     2.016725
+TsPct                      1.945225
+AtRimAccuracy              1.890981
+ShotQualityAvg             1.731624
+dtype: float64
+
+Cluster 4 top differing stats (standardized):
+ThreePtShootingFoulsDrawn     2.447051
+3pt And 1 Free Throw Trips    2.437267
+FtPoints                      2.360999
+Charge Fouls                  2.352761
+LiveBallTurnovers             2.347985
+ThreePtAssists                2.285595
+LongMidRangeFGA               2.282310
+AssistPoints                  2.272961
+Assists                       2.260547
+Points                        2.256336
+dtype: float64
+
+Cluster 5 top differing stats (standardized):
+DefThreePtRebounds          1.872290
+DefTwoPtReboundPct          1.864939
+DefAtRimReboundPct          1.858740
+DefRebounds                 1.769871
+DefThreePtReboundPct        1.627061
+Rebounds                    1.598718
+Corner3Accuracy            -1.538261
+UnblockedCorner3Accuracy   -1.534602
+DefTwoPtRebounds            1.534581
+Assisted3sPct              -1.510578
+dtype: float64
+
+=== Closest Players to Cluster Centers for C ===
+
+Cluster 0 (top 10 closest):
+  1. Zach Edey (distance=2.8497)
+  2. Goga Bitadze (distance=3.0983)
+  3. Yves Missi (distance=3.6545)
+  4. Donovan Clingan (distance=3.6943)
+  5. Moussa Diabaté (distance=3.9307)
+  6. Day'Ron Sharpe (distance=4.3236)
+  7. Luke Kornet (distance=5.2484)
+  8. Walker Kessler (distance=5.3949)
+  9. Tony Bradley (distance=5.7304)
+  10. Robert Williams III (distance=6.1692)
+
+Cluster 1 (top 10 closest):
+  1. Ousmane Dieng (distance=2.6892)
+  2. Guerschon Yabusele (distance=2.8837)
+  3. Branden Carlson (distance=3.8362)
+  4. Naz Reid (distance=4.0022)
+  5. Brook Lopez (distance=4.0367)
+  6. Al Horford (distance=4.2307)
+  7. Duop Reath (distance=4.4804)
+  8. Thomas Bryant (distance=4.6165)
+  9. Micah Potter (distance=4.6730)
+  10. Jay Huff (distance=5.3680)
+
+Cluster 2 (top 10 closest):
+  1. Nic Claxton (distance=2.5262)
+  2. Wendell Carter Jr. (distance=2.8269)
+  3. Precious Achiuwa (distance=3.1466)
+  4. Orlando Robinson (distance=3.3919)
+  5. Isaiah Stewart (distance=3.4376)
+  6. Paul Reed (distance=3.7140)
+  7. Daniel Theis (distance=3.8240)
+  8. Jock Landale (distance=3.8559)
+  9. Onyeka Okongwu (distance=3.9497)
+  10. Kel'el Ware (distance=4.5380)
+
+Cluster 3 (top 10 closest):
+  1. Jaxson Hayes (distance=3.1175)
+  2. Christian Koloko (distance=3.4675)
+  3. Dereck Lively II (distance=3.5274)
+  4. Rudy Gobert (distance=3.8821)
+  5. Neemias Queta (distance=3.9093)
+  6. Jericho Sims (distance=4.2826)
+  7. Adem Bona (distance=4.3729)
+  8. Mason Plumlee (distance=4.5510)
+  9. Ariel Hukporti (distance=4.8277)
+  10. Kylor Kelley (distance=4.9983)
+
+Cluster 4 (top 10 closest):
+  1. Karl-Anthony Towns (distance=4.5538)
+  2. Bam Adebayo (distance=4.8150)
+  3. Chet Holmgren (distance=5.1579)
+  4. Kristaps Porziņģis (distance=5.4537)
+  5. Jusuf Nurkić (distance=6.5278)
+  6. Domantas Sabonis (distance=6.8158)
+  7. Alperen Sengun (distance=6.9536)
+  8. Tristan Vukcevic (distance=6.9617)
+  9. Moritz Wagner (distance=7.0391)
+  10. Jaren Jackson Jr. (distance=7.5960)
+
+Cluster 5 (top 10 closest):
+  1. Nick Richards (distance=2.7327)
+  2. Clint Capela (distance=3.0428)
+  3. Charles Bassey (distance=3.0740)
+  4. Mark Williams (distance=3.4164)
+  5. Ivica Zubac (distance=3.5641)
+  6. Trayce Jackson-Davis (distance=3.5841)
+  7. DeAndre Jordan (distance=4.3343)
+  8. Jalen Duren (distance=4.3859)
+  9. Isaiah Hartenstein (distance=4.9991)
+  10. Andre Drummond (distance=5.0280)
+
+Weighted archetype effects (per player, minute-weighted):
+C_cluster_1     7.424190
+SG_cluster_3    6.994081
+PG_cluster_3    6.777830
+C_cluster_4     6.504330
+SG_cluster_4    6.462164
+C_cluster_3     6.247272
+PF_cluster_5    5.367281
+PF_cluster_3    5.034437
+SF_cluster_3    4.750119
+PF_cluster_0    4.357701
+C_cluster_5     4.157999
+PF_cluster_4    3.727489
+PG_cluster_2    3.596882
+PG_cluster_1    3.520092
+SF_cluster_0    3.326141
+PF_cluster_1    3.276835
+C_cluster_0     3.066121
+PF_cluster_2    1.789946
+SG_cluster_2    1.487622
+SF_cluster_2    1.258266
+PG_cluster_0    1.165517
+SG_cluster_0    0.654738
+SF_cluster_1    0.037085
+SG_cluster_1   -0.815907
+C_cluster_2    -3.841886
+
+=== Archetypes with strongest NEGATIVE effect (LR coefficients) ===
+C_cluster_2    -5.053603
+PF_cluster_2   -4.249941
+PF_cluster_3   -3.390590
+SF_cluster_1   -3.261281
+SF_cluster_2   -2.739023
+SG_cluster_1   -2.367985
+SG_cluster_2   -2.028211
+SG_cluster_0   -1.854981
+SF_cluster_0   -1.551948
+PG_cluster_0   -1.168351
+dtype: float64
+
+=== Archetypes with strongest POSITIVE effect (LR coefficients) ===
+C_cluster_0     0.572186
+C_cluster_5     0.793935
+PF_cluster_1    1.416564
+SG_cluster_4    2.205682
+PF_cluster_5    2.490858
+C_cluster_1     2.989798
+PG_cluster_3    3.802370
+C_cluster_3     4.040139
+SG_cluster_3    4.944146
+C_cluster_4     4.988241
